@@ -29,6 +29,7 @@ jQuery(function() {
         $.current_column += 1;
       }
       $.loading_items = false;
+      $.current_page += 1;
       window.setTimeout($('img.lazy').lazyload({
         failure_limit: 100
       }), 100);
@@ -83,6 +84,16 @@ jQuery(function() {
           return pin.remove();
         }
       });
+    }
+  });
+  $(window).scroll(function() {
+    var doc_height, height, sensitivity, top;
+    top = $(window).scrollTop();
+    height = $(window).innerHeight();
+    doc_height = $(document).height();
+    sensitivity = 1000;
+    if (top + height + sensitivity > doc_height) {
+      load_more_items();
     }
   });
   load_more_items();

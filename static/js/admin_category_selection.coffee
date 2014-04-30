@@ -20,6 +20,7 @@ jQuery ->
 				$('#column' + $.current_column).append(pin_html)
 				$.current_column += 1
 			$.loading_items = false
+			$.current_page += 1
 			window.setTimeout($('img.lazy').lazyload({
 				failure_limit: 100}), 100)
 			return
@@ -61,6 +62,17 @@ jQuery ->
 				type: 'POST',
 				success: ->
 					pin.remove()
+		return
+
+
+	# detect when scrolling to bottom to load more items
+	$(window).scroll ->
+		top = $(window).scrollTop()
+		height = $(window).innerHeight();
+		doc_height = $(document).height()
+		sensitivity = 1000
+		if top + height + sensitivity > doc_height
+			load_more_items()
 		return
 
 	
