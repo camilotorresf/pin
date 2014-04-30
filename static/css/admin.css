@@ -43,7 +43,7 @@
   .category_pin_image .pinned_link a {
     text-decorator: none; }
 
-.category_selection_list {
+.category_selection_list, #current_homepage_pins {
   width: 150px;
   height: 500px;
   float: left;
@@ -52,7 +52,7 @@
   top: 150;
   left: 250px;
   overflow-y: scroll; }
-  .category_selection_list label {
+  .category_selection_list label, #current_homepage_pins label {
     font-weight: normal;
     font-size: 70%;
     line-height: normal; }
