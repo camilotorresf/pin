@@ -53,6 +53,9 @@ urls = ('', 'admin.PageIndex',
         '/selection/pending_items', 'mypinnings.admin.category_selection.PendingItems',
         '/selection/add_to_categories', 'mypinnings.admin.category_selection.AddPinToCategories',
         '/selection','mypinnings.admin.category_selection.CategorySelection',
+        '/homepage_pins','mypinnings.admin.homepage_pins.HomepagePins',
+        '/homepage_pins/current_pins','mypinnings.admin.homepage_pins.CurrentPins',
+        '/homepage_pins/unselected_pins', 'mypinnings.admin.homepage_pins.UnselectedPins',
         )
 
 

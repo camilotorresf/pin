@@ -1109,3 +1109,12 @@ alter table pins add image_width integer;
 alter table pins add image_height integer;
 alter table pins add image_212_height integer;
 alter table pins add image_202_height integer;
+
+
+create table homepage_pins (
+	id integer primary key references pins(id),
+	image_url text not null,
+	image_width integer not null,
+	image_height integer not null
+);
+
