@@ -1,7 +1,10 @@
 import json
 
+import web
+
 from mypinnings import template
 from mypinnings import database
+from mypinnings import conf
 from mypinnings.admin.auth import login_required
 
 
@@ -44,6 +47,8 @@ class UnselectedPins(object):
     @login_required
     def GET(self):
         db = database.get_db()
+        page = int(web.input().page)
+        offset = page * conf.settings.PIN_COUNT
         results = db.query('''
             select
                 tags.tags, pins.*, users.pic as user_pic,
@@ -59,7 +64,9 @@ class UnselectedPins(object):
                 left join boards on pins.board_id = boards.id
             where pins.id not in (select id from homepage_pins)
             group by tags.tags, pins.id, users.id
-            order by timestamp desc''')
+            order by timestamp desc
+            offset $offset limit $limit''',
+            vars={'offset': offset, 'limit': conf.settings.PIN_COUNT})
         pins = []
         for row in results:
             pin = dict(row)
