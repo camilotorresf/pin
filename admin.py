@@ -56,6 +56,7 @@ urls = ('', 'admin.PageIndex',
         '/homepage_pins','mypinnings.admin.homepage_pins.HomepagePins',
         '/homepage_pins/current_pins','mypinnings.admin.homepage_pins.CurrentPins',
         '/homepage_pins/unselected_pins', 'mypinnings.admin.homepage_pins.UnselectedPins',
+        '/homepage_pins/(\d+)', 'mypinnings.admin.homepage_pins.Pin',
         )
 
 

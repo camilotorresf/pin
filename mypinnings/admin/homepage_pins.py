@@ -1,11 +1,17 @@
 import json
+import urllib
 
 import web
+from PIL import Image
 
 from mypinnings import template
 from mypinnings import database
 from mypinnings import conf
+from mypinnings import media
 from mypinnings.admin.auth import login_required
+
+
+IMAGE_BASE_HEIGHT = 269
 
 
 class HomepagePins(object):
@@ -74,3 +80,27 @@ class UnselectedPins(object):
             pins.append(pin)
         print(json.dumps(pins))
         return json.dumps(pins)
+
+
+class Pin(object):
+    @login_required
+    def PUT(self, pin_id):
+        db = database.get_db()
+        pin = db.where(table='pins', id=pin_id)[0]
+        filename, _ = urllib.urlretrieve(pin.image_url)
+        image = Image.open(filename)
+        width, height = image.size
+        scaling_ratio = IMAGE_BASE_HEIGHT / float(height)
+        new_width = int(width * scaling_ratio)
+        scaled_size = (new_width, IMAGE_BASE_HEIGHT)
+        image.thumbnail(scaled_size, Image.ANTIALIAS)
+        image.save(filename)
+        images_dict = media.store_image_from_filename(db=db,
+                                                      filename=filename,
+                                                      widths=None)
+        db.insert(tablename='homepage_pins',
+                  id=pin_id,
+                  image_url=images_dict[0]['url'],
+                  image_width=new_width,
+                  image_height=IMAGE_BASE_HEIGHT)
+        return json.dumps({'status': 'ok'})

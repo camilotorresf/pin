@@ -86,6 +86,23 @@ jQuery(function() {
       load_more_items();
     }
   });
+  $('#column1,#column2,#column3').on('click', '.category_pin', function() {
+    var element_to_move, pin_id, url;
+    element_to_move = $(this);
+    pin_id = $(this).attr('pin_id');
+    url = '/admin/homepage_pins/' + pin_id;
+    $.ajax({
+      url: url,
+      type: 'PUT',
+      dataType: 'json',
+      success: function() {
+        $('#current_homepage_pins').append(element_to_move);
+        $('#column1').remove(element_to_move);
+        $('#column2').remove(element_to_move);
+        $('#column3').remove(element_to_move);
+      }
+    });
+  });
   load_current_homepage_pins();
   load_more_items();
 });

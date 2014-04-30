@@ -68,7 +68,24 @@ jQuery ->
 		if top + height + sensitivity > doc_height
 			load_more_items()
 		return
-		
+
+
+	$('#column1,#column2,#column3').on 'click', '.category_pin', ->
+		element_to_move = $(this)
+		pin_id = $(this).attr('pin_id')
+		url = '/admin/homepage_pins/' + pin_id
+		$.ajax
+			url: url,
+			type: 'PUT',
+			dataType: 'json',
+			success: ->
+				$('#current_homepage_pins').append(element_to_move)
+				$('#column1').remove(element_to_move)
+				$('#column2').remove(element_to_move)
+				$('#column3').remove(element_to_move)
+				return
+		return
+
 	
 	load_current_homepage_pins()
 	load_more_items()
