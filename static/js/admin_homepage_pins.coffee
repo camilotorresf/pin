@@ -99,6 +99,7 @@ jQuery ->
 				if $.current_column > 3
 					$.current_column = 1
 				$('#column' + $.current_column).append(element_to_move)
+				$.current_column += 1
 				$('#current_homepage_pins').remove(element_to_move)
 				return
 		return
