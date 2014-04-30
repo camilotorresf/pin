@@ -104,3 +104,11 @@ class Pin(object):
                   image_width=new_width,
                   image_height=IMAGE_BASE_HEIGHT)
         return json.dumps({'status': 'ok'})
+
+    @login_required
+    def DELETE(self, pin_id):
+        db = database.get_db()
+        db.delete(table='homepage_pins',
+                  where='id=$id',
+                  vars={'id': pin_id})
+        return json.dumps({'status': 'ok'})

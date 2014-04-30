@@ -103,6 +103,24 @@ jQuery(function() {
       }
     });
   });
+  $('#current_homepage_pins').on('click', '.category_pin', function() {
+    var element_to_move, pin_id, url;
+    element_to_move = $(this);
+    pin_id = $(this).attr('pin_id');
+    url = '/admin/homepage_pins/' + pin_id;
+    $.ajax({
+      url: url,
+      type: 'DELETE',
+      dataType: 'json',
+      success: function() {
+        if ($.current_column > 3) {
+          $.current_column = 1;
+        }
+        $('#column' + $.current_column).append(element_to_move);
+        $('#current_homepage_pins').remove(element_to_move);
+      }
+    });
+  });
   load_current_homepage_pins();
   load_more_items();
 });

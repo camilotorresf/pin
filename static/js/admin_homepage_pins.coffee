@@ -86,6 +86,23 @@ jQuery ->
 				return
 		return
 
+
+	$('#current_homepage_pins').on 'click', '.category_pin', ->
+		element_to_move = $(this)
+		pin_id = $(this).attr('pin_id')
+		url = '/admin/homepage_pins/' + pin_id
+		$.ajax
+			url: url,
+			type: 'DELETE',
+			dataType: 'json',
+			success: ->
+				if $.current_column > 3
+					$.current_column = 1
+				$('#column' + $.current_column).append(element_to_move)
+				$('#current_homepage_pins').remove(element_to_move)
+				return
+		return
+
 	
 	load_current_homepage_pins()
 	load_more_items()
